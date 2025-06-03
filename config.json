@@ -1,0 +1,41 @@
+{
+  "cleaning_settings": {
+    "remove_exif": true,
+    "remove_watermarks": true,
+    "randomize_timestamps": true,
+    "randomize_pixels": true,
+    "steganography_cleaning": true,
+    "network_trace_removal": true,
+    "pixel_noise_intensity": 0.01,
+    "jpeg_quality": 95
+  },
+  "file_settings": {
+    "rename_files": false,
+    "backup_originals": false,
+    "recursive_processing": true,
+    "filename_length": 12,
+    "preserve_extensions": true
+  },
+  "supported_formats": {
+    "images": [".jpg", ".jpeg", ".png", ".tiff", ".tif", ".bmp", ".webp"],
+    "videos": [".mp4", ".avi", ".mov", ".mkv", ".wmv", ".flv", ".webm"]
+  },
+  "security_settings": {
+    "secure_delete": false,
+    "multiple_overwrites": 3,
+    "verify_changes": true,
+    "log_operations": true
+  },
+  "detection_settings": {
+    "entropy_threshold": 7.5,
+    "size_anomaly_threshold": 1.2,
+    "suspicious_patterns": ["FF E0", "FF E1", "FF E2", "FF ED", "FF EE"]
+  },
+  "output_settings": {
+    "log_level": "INFO",
+    "generate_reports": true,
+    "report_format": "text",
+    "include_hashes": true,
+    "timestamp_reports": true
+  }
+}
