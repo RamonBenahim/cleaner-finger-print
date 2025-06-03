@@ -1,8 +1,6 @@
 # Advanced Media Fingerprint Remover
 
-A comprehensive tool for removing digital fingerprints, metadata, and hidden data from media files. Supports advanced steganography detection and removal.
-
-## Features
+Remove digital fingerprints and traces from images and videos.
 
 ### Core Functionality
 
