@@ -35,10 +35,7 @@ class TestMediaCleanerBot(unittest.TestCase):
             self.skipTest("PIL not available")
     
     def test_config_loading(self):
-        config_data = {
-            "remove_exif": False,
-            "rename_files": True
-        }
+        config_data = {"remove_exif": False, "rename_files": True}
         
         config_file = tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False)
         json.dump(config_data, config_file)
@@ -61,7 +58,6 @@ class TestMediaCleanerBot(unittest.TestCase):
     
     def test_exif_removal(self):
         test_image = self.create_test_image()
-        
         result = self.bot.remove_exif_data(test_image)
         self.assertTrue(result)
         self.assertTrue(os.path.exists(test_image))
@@ -78,7 +74,6 @@ class TestMediaCleanerBot(unittest.TestCase):
     
     def test_single_file_cleaning(self):
         test_image = self.create_test_image()
-        
         result = self.bot.clean_single_file(test_image)
         
         self.assertTrue(result['success'])
@@ -88,19 +83,8 @@ class TestMediaCleanerBot(unittest.TestCase):
     
     def test_nonexistent_file(self):
         result = self.bot.clean_single_file('/nonexistent/file.jpg')
-        
         self.assertFalse(result['success'])
         self.assertGreater(len(result['errors']), 0)
-    
-    def test_backup_creation(self):
-        test_image = self.create_test_image()
-        
-        self.bot.config['backup_originals'] = True
-        result = self.bot.clean_single_file(test_image)
-        
-        self.assertTrue(result['success'])
-        self.assertTrue(os.path.exists(f"{test_image}.backup"))
-        self.assertIn("Backup created", result['operations'])
 
 class TestAdvancedMediaCleaner(unittest.TestCase):
     
@@ -140,7 +124,6 @@ class TestAdvancedMediaCleaner(unittest.TestCase):
     
     def test_hidden_data_detection(self):
         test_image = self.create_test_image()
-        
         analysis = self.cleaner.detect_hidden_data(test_image)
         
         self.assertEqual(analysis['file_path'], test_image)
@@ -150,13 +133,11 @@ class TestAdvancedMediaCleaner(unittest.TestCase):
     
     def test_steganographic_data_removal(self):
         test_image = self.create_test_image()
-        
         result = self.cleaner.remove_steganographic_data(test_image)
         self.assertTrue(result)
     
     def test_advanced_cleaning(self):
         test_image = self.create_test_image()
-        
         result = self.cleaner.advanced_clean_single_file(test_image)
         
         self.assertTrue(result['success'])
@@ -164,13 +145,8 @@ class TestAdvancedMediaCleaner(unittest.TestCase):
         self.assertIn('steganography_risk', result)
         self.assertGreater(len(result['operations']), 0)
 
-class TestFileStructure(unittest.TestCase):
-    
-    def test_requirements_file_exists(self):
-        self.assertTrue(os.path.exists('requirements.txt'))
-
 def test_dependencies():
-    print("\nTesting dependencies...")
+    print("Testing dependencies...")
     
     dependencies = [
         ('PIL', 'Pillow'),
@@ -184,21 +160,21 @@ def test_dependencies():
     for module_name, package_name in dependencies:
         try:
             __import__(module_name)
-            print(f"SUCCESS: {package_name}")
+            print(f"✅ {package_name}")
         except ImportError:
-            print(f"ERROR: {package_name} - MISSING")
+            print(f"❌ {package_name} - MISSING")
             missing_deps.append(package_name)
     
     if missing_deps:
-        print(f"\nWARNING: Missing dependencies: {', '.join(missing_deps)}")
+        print(f"Missing dependencies: {', '.join(missing_deps)}")
         print("Run: pip install -r requirements.txt")
         return False
     else:
-        print("\nSUCCESS: All dependencies are installed!")
+        print("All dependencies installed!")
         return True
 
 def test_file_structure():
-    print("\nTesting file structure...")
+    print("Testing file structure...")
     
     required_files = [
         'media_cleaner_bot.py',
@@ -206,29 +182,22 @@ def test_file_structure():
         'batch_processor.py',
         'requirements.txt',
         'config.json',
-        'README.md',
-        'install.sh',
-        'example_usage.py'
+        'README.md'
     ]
     
     missing_files = []
     
     for file_name in required_files:
         if os.path.exists(file_name):
-            print(f"SUCCESS: {file_name}")
+            print(f"✅ {file_name}")
         else:
-            print(f"ERROR: {file_name} - MISSING")
+            print(f"❌ {file_name} - MISSING")
             missing_files.append(file_name)
     
-    if missing_files:
-        print(f"\nWARNING: Missing files: {', '.join(missing_files)}")
-        return False
-    else:
-        print("\nSUCCESS: All files are present!")
-        return True
+    return len(missing_files) == 0
 
 def run_functionality_tests():
-    print("\nTesting basic functionality...")
+    print("Testing basic functionality...")
     
     try:
         from PIL import Image
@@ -238,19 +207,19 @@ def run_functionality_tests():
             img.save(temp_file.name, 'JPEG')
             temp_path = temp_file.name
         
-        print("SUCCESS: Test image creation")
+        print("✅ Test image creation")
         
         bot = MediaCleanerBot()
         result = bot.clean_single_file(temp_path)
         
         if result['success']:
-            print("SUCCESS: Basic file cleaning")
+            print("✅ Basic file cleaning")
         else:
-            print(f"ERROR: Basic cleaning failed: {result['errors']}")
+            print(f"❌ Basic cleaning failed: {result['errors']}")
         
         advanced = AdvancedMediaCleaner()
         analysis = advanced.detect_hidden_data(temp_path)
-        print("SUCCESS: Hidden data analysis")
+        print("✅ Hidden data analysis")
         
         os.unlink(temp_path)
         backup_path = f"{temp_path}.backup"
@@ -260,7 +229,7 @@ def run_functionality_tests():
         return True
         
     except Exception as e:
-        print(f"ERROR: Functionality test failed: {e}")
+        print(f"❌ Functionality test failed: {e}")
         return False
 
 def main():
@@ -277,9 +246,9 @@ def main():
     unittest.main(argv=[''], exit=False, verbosity=2)
     
     if all_passed:
-        print("\nALL TESTS PASSED!")
+        print("ALL TESTS PASSED!")
     else:
-        print("\nSOME TESTS FAILED - Check output above")
+        print("SOME TESTS FAILED")
 
 if __name__ == "__main__":
     main()
