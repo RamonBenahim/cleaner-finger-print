@@ -1,8 +1,6 @@
 # Media Fingerprint Remover
 
-A powerful tool for removing digital fingerprints and traces from images and videos.
-
-## Features
+Remove digital fingerprints and traces from images and videos.
 
 - **EXIF Data Removal**: Removes all metadata from images
 - **Video Metadata Cleaning**: Cleans metadata from video files
